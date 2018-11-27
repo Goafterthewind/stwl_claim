@@ -13,17 +13,17 @@ public class CodeUtil {
 
     public static void main(String args[]) {
 
-  //      String entityPackage;
+        String entityPackage;
 
 
 
-//        entityPackage = "newkeypart";
+        entityPackage = "elk";
 
-//        DbCodeGenerateFactory.codeGenerate("newkeypart", entityPackage);
-//        DbCodeGenerateFactory.codeGenerate("TS_ROLE", entityPackage);
-//        DbCodeGenerateFactory.codeGenerate("TS_MENU", entityPackage);
+       DbCodeGenerateFactory.codeGenerate("T_ELK", entityPackage);
+       DbCodeGenerateFactory.codeGenerate("T_EXCELDATA", entityPackage);
+       DbCodeGenerateFactory.codeGenerate("UUSERS", entityPackage);
 
-        testOracle();
+  //      testOracle();
     }
 
 

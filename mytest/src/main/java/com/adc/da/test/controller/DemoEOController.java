@@ -43,7 +43,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/${restPath}/test/demo")
 @Api(description = "|DemoEO|")
-public class DemoEOController extends BaseController<DemoEO>{
+public class
+
+DemoEOController extends BaseController<DemoEO>{
 
     private static final Logger logger = LoggerFactory.getLogger(DemoEOController.class);
 

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.elk.dao.ExceldataEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.elk.entity.ExceldataEO" >
+    <id column="carid" property="carid" />
+    <result column="createdate" property="createdate" />
+    <result column="carbody" property="carbody" />
+    <result column="gearbox" property="gearbox" />
+    <result column="fuelconsumption" property="fuelconsumption" />
+    <result column="cc" property="cc" />
+    <result column="manufacturerprice" property="manufacturerprice" />
+    <result column="dealerprice" property="dealerprice" />
+    <result column="caryear" property="caryear" />
+    <result column="carname" property="carname" />
+  </resultMap>
+
+  <!-- T_EXCELDATA table all fields -->
+  <sql id="Base_Column_List" >
+     createdate, carbody, gearbox, fuelconsumption, cc, manufacturerprice, dealerprice, caryear, carname, carid
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="createdate != null" >
+        and createdate ${createdateOperator} #{createdate}
+      </if>
+      <if test="createdate1 != null" >
+        and createdate &gt;= #{createdate1}
+      </if>
+      <if test="createdate2 != null" >
+        and createdate &lt;= #{createdate2}
+      </if>
+      <if test="carbody != null" >
+        and carbody ${carbodyOperator} #{carbody}
+      </if>
+      <if test="gearbox != null" >
+        and gearbox ${gearboxOperator} #{gearbox}
+      </if>
+      <if test="fuelconsumption != null" >
+        and fuelconsumption ${fuelconsumptionOperator} #{fuelconsumption}
+      </if>
+      <if test="cc != null" >
+        and cc ${ccOperator} #{cc}
+      </if>
+      <if test="manufacturerprice != null" >
+        and manufacturerprice ${manufacturerpriceOperator} #{manufacturerprice}
+      </if>
+      <if test="dealerprice != null" >
+        and dealerprice ${dealerpriceOperator} #{dealerprice}
+      </if>
+      <if test="caryear != null" >
+        and caryear ${caryearOperator} #{caryear}
+      </if>
+      <if test="carname != null" >
+        and carname ${carnameOperator} #{carname}
+      </if>
+      <if test="carid != null" >
+        and carid ${caridOperator} #{carid}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.elk.entity.ExceldataEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="carid">
+        SELECT SEQ_T_EXCELDATA.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into T_EXCELDATA(<include refid="Base_Column_List" />)
+    values (#{createdate, jdbcType=TIMESTAMP}, #{carbody, jdbcType=VARCHAR}, #{gearbox, jdbcType=VARCHAR}, #{fuelconsumption, jdbcType=VARCHAR}, #{cc, jdbcType=VARCHAR}, #{manufacturerprice, jdbcType=VARCHAR}, #{dealerprice, jdbcType=VARCHAR}, #{caryear, jdbcType=VARCHAR}, #{carname, jdbcType=VARCHAR}, #{carid, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.elk.entity.ExceldataEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="carid">
+        SELECT SEQ_T_EXCELDATA.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into T_EXCELDATA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="createdate != null" >createdate,</if>
+                <if test="carbody != null" >carbody,</if>
+                <if test="gearbox != null" >gearbox,</if>
+                <if test="fuelconsumption != null" >fuelconsumption,</if>
+                <if test="cc != null" >cc,</if>
+                <if test="manufacturerprice != null" >manufacturerprice,</if>
+                <if test="dealerprice != null" >dealerprice,</if>
+                <if test="caryear != null" >caryear,</if>
+                <if test="carname != null" >carname,</if>
+                <if test="carid != null" >carid,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="createdate != null" >#{createdate, jdbcType=TIMESTAMP},</if>
+                <if test="carbody != null" >#{carbody, jdbcType=VARCHAR},</if>
+                <if test="gearbox != null" >#{gearbox, jdbcType=VARCHAR},</if>
+                <if test="fuelconsumption != null" >#{fuelconsumption, jdbcType=VARCHAR},</if>
+                <if test="cc != null" >#{cc, jdbcType=VARCHAR},</if>
+                <if test="manufacturerprice != null" >#{manufacturerprice, jdbcType=VARCHAR},</if>
+                <if test="dealerprice != null" >#{dealerprice, jdbcType=VARCHAR},</if>
+                <if test="caryear != null" >#{caryear, jdbcType=VARCHAR},</if>
+                <if test="carname != null" >#{carname, jdbcType=VARCHAR},</if>
+                <if test="carid != null" >#{carid, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.elk.entity.ExceldataEO" >
+    update T_EXCELDATA
+       set  createdate = #{createdate},
+            carbody = #{carbody},
+            gearbox = #{gearbox},
+            fuelconsumption = #{fuelconsumption},
+            cc = #{cc},
+            manufacturerprice = #{manufacturerprice},
+            dealerprice = #{dealerprice},
+            caryear = #{caryear},
+            carname = #{carname}
+     where  carid = #{carid}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.elk.entity.ExceldataEO" >
+    update T_EXCELDATA
+    <set >
+      <if test="createdate != null" >
+        createdate = #{createdate},
+      </if>
+      <if test="carbody != null" >
+        carbody = #{carbody},
+      </if>
+      <if test="gearbox != null" >
+        gearbox = #{gearbox},
+      </if>
+      <if test="fuelconsumption != null" >
+        fuelconsumption = #{fuelconsumption},
+      </if>
+      <if test="cc != null" >
+        cc = #{cc},
+      </if>
+      <if test="manufacturerprice != null" >
+        manufacturerprice = #{manufacturerprice},
+      </if>
+      <if test="dealerprice != null" >
+        dealerprice = #{dealerprice},
+      </if>
+      <if test="caryear != null" >
+        caryear = #{caryear},
+      </if>
+      <if test="carname != null" >
+        carname = #{carname},
+      </if>
+    </set>
+     where carid = #{carid}
+  </update>
+
+  <!-- 根据id查询 T_EXCELDATA -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from T_EXCELDATA
+     where carid = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from T_EXCELDATA
+     where carid = #{value}
+
+  </delete>
+
+  <!-- T_EXCELDATA 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from T_EXCELDATA
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询T_EXCELDATA列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from T_EXCELDATA
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from T_EXCELDATA
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

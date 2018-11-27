@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.elk.dao.ElkEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.elk.entity.ElkEO" >
+    <id column="tid" property="tid" />
+    <result column="tsex" property="tsex" />
+    <result column="tage" property="tage" />
+    <result column="tname" property="tname" />
+  </resultMap>
+
+  <!-- T_ELK table all fields -->
+  <sql id="Base_Column_List" >
+     tsex, tage, tname, tid
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="tsex != null" >
+        and tsex ${tsexOperator} #{tsex}
+      </if>
+      <if test="tage != null" >
+        and tage ${tageOperator} #{tage}
+      </if>
+      <if test="tname != null" >
+        and tname ${tnameOperator} #{tname}
+      </if>
+      <if test="tid != null" >
+        and tid ${tidOperator} #{tid}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.elk.entity.ElkEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="tid">
+        SELECT SEQ_T_ELK.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into T_ELK(<include refid="Base_Column_List" />)
+    values (#{tsex, jdbcType=VARCHAR}, #{tage, jdbcType=VARCHAR}, #{tname, jdbcType=VARCHAR}, #{tid, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.elk.entity.ElkEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="tid">
+        SELECT SEQ_T_ELK.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into T_ELK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="tsex != null" >tsex,</if>
+                <if test="tage != null" >tage,</if>
+                <if test="tname != null" >tname,</if>
+                <if test="tid != null" >tid,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="tsex != null" >#{tsex, jdbcType=VARCHAR},</if>
+                <if test="tage != null" >#{tage, jdbcType=VARCHAR},</if>
+                <if test="tname != null" >#{tname, jdbcType=VARCHAR},</if>
+                <if test="tid != null" >#{tid, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.elk.entity.ElkEO" >
+    update T_ELK
+       set  tsex = #{tsex},
+            tage = #{tage},
+            tname = #{tname}
+     where  tid = #{tid}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.elk.entity.ElkEO" >
+    update T_ELK
+    <set >
+      <if test="tsex != null" >
+        tsex = #{tsex},
+      </if>
+      <if test="tage != null" >
+        tage = #{tage},
+      </if>
+      <if test="tname != null" >
+        tname = #{tname},
+      </if>
+    </set>
+     where tid = #{tid}
+  </update>
+
+  <!-- 根据id查询 T_ELK -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from T_ELK
+     where tid = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from T_ELK
+     where tid = #{value}
+
+  </delete>
+
+  <!-- T_ELK 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from T_ELK
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询T_ELK列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from T_ELK
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from T_ELK
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

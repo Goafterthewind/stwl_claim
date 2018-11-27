@@ -50,6 +50,7 @@
 		<module>stwl-claim-ssologin</module>
 		<module>mytest</module>
 		<module>adc-test</module>
+		<module>elk</module>
 	</modules>
 
 	<repositories>
@@ -95,7 +96,7 @@
 				<version>${spring.boot.version}</version>
 			</dependency>
 
-			<!-- Provided -->
+			<!-- Provided-->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-tomcat</artifactId>

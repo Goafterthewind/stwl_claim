@@ -50,4 +50,6 @@ public class HeroEOService extends BaseService<HeroEO, String> {
         return dao.queryByList(page);
     }
 
+
+
 }

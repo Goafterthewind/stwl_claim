@@ -3,6 +3,7 @@ package com.adc.da.test.controller;
 import com.adc.da.excel.poi.excel.ExcelExportUtil;
 import com.adc.da.excel.poi.excel.entity.ExportParams;
 import com.adc.da.excel.poi.excel.entity.enums.ExcelType;
+import com.adc.da.pdf.PDFPage;
 import com.adc.da.pdf.PDFUtils;
 import com.adc.da.test.dto.DemoDto;
 import com.adc.da.test.entity.DemoEO;
@@ -99,14 +100,20 @@ public class Excel_Pdf_IO {
     @GetMapping("/pdf/download")
     public void pdfDownload(HttpServletResponse response) throws Exception{
         //设置下载文件名
+        /*
+        * setHeader():设定指定名字的HTTP文件头的值
+        * 写到服务器返回给浏览器的相应报文头，name是名字，value是值
+         * */
         response.setHeader("Content-Disposition",
                 "attachment; filename=" + new String("用户信息.pdf".getBytes(),"iso-8859-1"));
+        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
         response.setContentType("application/force-download");
 
         //创建图片对象
         Image img = Image.getInstance("6751.jpg");
         //图片缩放
         img.scaleToFit(PageSize.A5.rotate());
+        //图片坐标
         img.setAbsolutePosition(0,0);
 
         //创建元素集合，用于写入pdf中
@@ -126,22 +133,22 @@ public class Excel_Pdf_IO {
 
 
         //创建多页pdf
-//        PDFPage page1 = new PDFPage();
-//        page1.add(new Paragraph("第一页pdf_1", PDFUtils.FONTCN));
-//        page1.add(new Paragraph("第一页pdf_2", PDFUtils.FONTCN));
-//        page1.add(img);
-//
-//        PDFPage page2 = new PDFPage();
-//        page2.add(new Paragraph("第二页pdf_1", PDFUtils.FONTCN));
-//        page2.add(new Paragraph("第二页pdf_2", PDFUtils.FONTCN));
-//        page2.add(img);
-//
-//        ArrayList<PDFPage> pages = new ArrayList<>();
-//        pages.add(page1);
-//        pages.add(page2);
-//
-//        new PDFUtils().createPdfWithNewPage("adc_pdf2.pdf",pages,PageSize.A4);
-//        fileDowm(sos,"adc_pdf2.pdf");
+        PDFPage page1 = new PDFPage();
+        page1.add(new Paragraph("第一页pdf_1", PDFUtils.FONTCN));
+        page1.add(new Paragraph("第一页pdf_2", PDFUtils.FONTCN));
+        page1.add(img);
+
+        PDFPage page2 = new PDFPage();
+        page2.add(new Paragraph("第二页pdf_1", PDFUtils.FONTCN));
+        page2.add(new Paragraph("第二页pdf_2", PDFUtils.FONTCN));
+        page2.add(img);
+
+        ArrayList<PDFPage> pages = new ArrayList<>();
+        pages.add(page1);
+        pages.add(page2);
+
+        new PDFUtils().createPdfWithNewPage("adc_pdf2.pdf",pages,PageSize.A4);
+        fileDowm(sos,"adc_pdf2.pdf");
     }
 
     private void fileDowm(ServletOutputStream sos,String path) throws IOException {

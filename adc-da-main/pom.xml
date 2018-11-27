@@ -16,6 +16,12 @@
 	<description>web project for Spring Boot</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.adc</groupId>
+			<artifactId>elk</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 		<!-- 框架基础组件 -->
 		<dependency>
 			<groupId>com.adc</groupId>
